@@ -10,11 +10,13 @@ pip install polars-dta
 import polars as pl
 import polars_dta  # also registers df.dta
 
-df = pl.DataFrame({
-    "id": [1, 2, 3],
-    "grade": pl.Series(["lo", "hi", "lo"], dtype=pl.Enum(["lo", "mid", "hi"])),
-    "income": [52_000.0, None, 61_500.5],
-})
+df = pl.DataFrame(
+    {
+        "id": [1, 2, 3],
+        "grade": pl.Series(["lo", "hi", "lo"], dtype=pl.Enum(["lo", "mid", "hi"])),
+        "income": [52_000.0, None, 61_500.5],
+    }
+)
 
 df.dta.write("survey.dta", variable_labels={"income": "Annual income"}, data_label="Wave 1")
 polars_dta.write_dta(df.lazy(), "survey.dta")  # same; a LazyFrame is collected first
